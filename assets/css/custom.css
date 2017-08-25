@@ -10,3 +10,10 @@ main {
 #letter-container {
     display: none;
 }
+
+#stickman{
+    display: none;
+    padding: 20px;
+    border: 2px solid #333333;
+    border-radius: 4px;
+}

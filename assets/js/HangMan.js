@@ -5,8 +5,9 @@ var HangMan = {
     maskedWord: [],
     discoveredLetters: [],
     wrongLetters: [],
+    globalUsed: [],
 
-    guessChances: 6,
+    guessChances: Canvas.drawArray.length,
 
     selectedLetter: "",
 
@@ -21,10 +22,15 @@ var HangMan = {
         this.maskedWord = [];
         this.discoveredLetters = [];
         this.wrongLetters = [];
+        this.globalUsed = [];
+
         this.guessChances = 6;
         this.selectedLetter = "";
 
         this.pickWord();
+
+        Canvas.reset();
+
         $("#letter-container").css("display", "block");
     },
 
@@ -55,8 +61,11 @@ var HangMan = {
         let selectIndex = (Math.floor((Math.random() * this.wordList.length))) - 1;
         this.selectedWord = this.wordList[selectIndex].toLowerCase().split("");
         this.selectedWord.splice(this.selectedWord.length-1, 1);
-
         console.log(this.selectedWord);
+
+        Canvas.canvas();
+        $("#stickman").css("display", "inline-block");
+        $("#stickman").css("text-align", "center");
 
         this.printMasked();
     },
@@ -110,13 +119,17 @@ var HangMan = {
 
     selectLetter(letter) {
         this.selectedLetter = letter.toLowerCase();
-        
-        $('#selected-letter').prop("disabled", false);
-        $('#selected-letter').text(`Submit: ${this.selectedLetter}`);
+        if(this.selectedWord.length > 0 && !this.globalUsed.includes(this.selectedLetter)) {
+            $('#selected-letter').prop("disabled", false);
+            $('#selected-letter').text(`Submit: ${this.selectedLetter}`);
+        }
+        else {
+            this.selectedLetter = "";
+        }
     },
 
     submitLetter() {
-        if(this.selectedLetter !== "") {
+        if(this.selectedLetter !== "" && this.selectedWord.length > 0 && !this.globalUsed.includes(this.selectedLetter)) {
             $(`#clickable-letter-${this.selectedLetter.toUpperCase()}`).prop('disabled', true);
 
             if(this.selectedWord.includes(this.selectedLetter)) {
@@ -129,8 +142,11 @@ var HangMan = {
             else {
                 this.wrongLetters.push(this.selectedLetter);
                 this.guessChances--;
+                
+                Canvas.drawArray[this.guessChances]();
             }
 
+            this.globalUsed.push(this.selectedLetter);
             this.selectedLetter = "";
 
             $('#selected-letter').prop("disabled", true);
