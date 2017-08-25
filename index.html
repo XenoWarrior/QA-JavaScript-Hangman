@@ -37,7 +37,7 @@
                             <div id="test-swipe-1">
                                 <h3 class="center-align">Game</h3>
                                 <div class="row center-align">
-                                    <blockquote>
+                                    <div clas="row">
                                         <p>
                                             The computer has decided on a random word. Click the letters below to take a guess at what the word is.
                                         </p>
@@ -47,11 +47,12 @@
                                         <p>
                                             If you guess all the words before the hangman is hung, you win.
                                         </p>
+                                        <br/>
                                         <p>
                                             <a id="download-button" class="waves-effect waves-light btn" onclick="HangMan.getWords();">Download Word List (4.5MB)</a>
                                         </p>
-                                    </blockquote>
-                                    <blockquote>
+                                    </div>
+                                    <div clas="row">
                                         <p>
                                             <div id="chances-container"></div>
                                             <canvas id="stickman">Browser does not support HTML5 Canvas</canvas>
@@ -59,11 +60,11 @@
                                         <p>
                                             <div id="hangman-word-container"></div>
                                         </p>
-                                    </blockquote>
+                                    </div>
                                     <div id="letter-container">
-                                        <blockquote>
+                                        <div class="row">
                                             You can also press the letter you want on your keyboard and submit it by pressing <q>Enter</q>
-                                        </blockquote>
+                                        </div>
                                         <div class="row">
                                             <div class="input-field col s2">
                                                 <button class="waves-effect waves-light btn-large" style="width: 128px;" id="clickable-letter-A" accesskey="A" onclick="HangMan.selectLetter('A');">A</button>

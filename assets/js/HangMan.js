@@ -24,7 +24,7 @@ var HangMan = {
         this.wrongLetters = [];
         this.globalUsed = [];
 
-        this.guessChances = 6;
+        this.guessChances = Canvas.drawArray.length,
         this.selectedLetter = "";
 
         this.pickWord();
