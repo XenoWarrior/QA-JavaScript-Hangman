@@ -156,6 +156,8 @@ var HangMan = {
             shownWord += `</strong>`;
             shownWord += `<p><a style="width: 180px;" class="waves-effect waves-light btn-large" id="reset-state" onclick="HangMan.resetState();">New Game</a></p>`;
             
+            $("#diff-selection-container").css("display", "inline-block");
+
             $("#chances-container").text("");
             $("#letter-container").css("display", "none");
         }
