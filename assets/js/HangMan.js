@@ -42,11 +42,11 @@ var HangMan = {
 
                 $("#letter-container").css("display", "block");
                 $("#download-button").css("display", "none");
+                $("#download-button").prop("disabled", true);
 
                 HangMan.pickWord();
             }
-        };
-
+        };        
         xhr.open('GET', url, true);
         xhr.send();
     },
@@ -64,8 +64,10 @@ var HangMan = {
     printMasked() {
         let shownWord = "";
 
+        console.log(`Length for this.discoveredLetters.length is: ${this.discoveredLetters.length}`);
+        console.log(`Length for this.selectedWord.length is: ${this.selectedWord.length}`);
+
         if(this.guessChances > 0) {
-            
             if(this.discoveredLetters.length === this.selectedWord.length) {
                 shownWord = "Game over, you saved the hangman! The word is: <strong>";
                 for(let i = 0; i < this.selectedWord.length; i++) {
@@ -118,11 +120,14 @@ var HangMan = {
             $(`#clickable-letter-${this.selectedLetter.toUpperCase()}`).prop('disabled', true);
 
             if(this.selectedWord.includes(this.selectedLetter)) {
-                this.discoveredLetters.push(this.selectedLetter);
+                for(let i = 0; i < this.selectedWord.length; i++) { 
+                    if(this.selectedWord[i] == this.selectedLetter) {
+                        this.discoveredLetters.push(this.selectedLetter);
+                    }
+                }
             }
             else {
                 this.wrongLetters.push(this.selectedLetter);
-
                 this.guessChances--;
             }
 
