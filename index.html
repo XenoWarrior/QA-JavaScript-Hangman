@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Ashley Scott - QA Consulting</title>
+
+        <link rel="stylesheet" href="./assets/materialize/css/materialize.min.css" />
+        <link rel="stylesheet" href="./assets/css/custom.css" />
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="./assets/materialize/js/materialize.min.js"></script>
+
+        <script src="./assets/js/HangMan.js"></script>
+    </head>
+    <body>
+        <nav>
+            <div class="nav-wrapper">
+                <a href="#" class="brand-logo">Hang Man</a>
+                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    <li><a href="./index.html">Home</a></li>
+                </ul>
+            </div>
+        </nav>
+        <main>
+            <div class="container">
+                <div class="row center-align">
+                    <h3>Hang Man</h3>
+                </div>
+                <div class="row">
+                    <div class="card white darken-1">
+                        <div class="card-content black-text">
+                            <ul id="tabs-swipe-demo" class="tabs">
+                                <li class="tab col m12"><a class="active" href="#test-swipe-1">Game</a></li>
+                                <li class="tab col m12"><a class="active" href="#test-swipe-2">Statistics</a></li>
+                            </ul>
+                            <div id="test-swipe-1">
+                                <h3 class="center-align">Game</h3>
+                                <div class="row center-align">
+                                    <p>
+                                        The computer has decided on a random word. Click the letters below to take a guess at what the word is.
+                                        <br/>
+                                        Each wrong word will add another piece of the hangman. Once the hangman is fully shown, the game is over.
+                                        <br/>
+                                        If you guess all the words before the hangman is hung, you win.
+                                        <br/>
+                                        <br/>
+                                        <a id="download-button" class="waves-effect waves-light btn" onclick="HangMan.getWords();">Download Word List (4.5MB)</a>
+                                    </p>
+                                    <p>
+                                        <div id="chances-container"></div>
+                                    </p>
+                                    <br/>
+                                    <p>
+                                        <div id="hangman-word-container"></div>
+                                    </p>
+                                    <div id="letter-container">
+                                        <div class="row">
+                                            <div class="input-field col s2">
+                                                <button class="waves-effect waves-light btn" id="clickable-letter-A" onclick="HangMan.selectLetter('A');">A</button>
+                                            </div>
+                                            <div class="input-field col s2">
+                                                <button class="waves-effect waves-light btn" id="clickable-letter-B" onclick="HangMan.selectLetter('B');">B</button>
+                                            </div>
+                                            <div class="input-field col s2">
+                                                <button class="waves-effect waves-light btn" id="clickable-letter-C" onclick="HangMan.selectLetter('C');">C</button>
+                                            </div>
+                                            <div class="input-field col s2">
+                                                <button class="waves-effect waves-light btn" id="clickable-letter-D" onclick="HangMan.selectLetter('D');">D</button>
+                                            </div>
+                                            <div class="input-field col s2">
+                                                <button class="waves-effect waves-light btn" id="clickable-letter-E" onclick="HangMan.selectLetter('E');">E</button>
+                                            </div>
+                                            <div class="input-field col s2">
+                                                <button class="waves-effect waves-light btn" id="clickable-letter-F" onclick="HangMan.selectLetter('F');">F</button>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="input-field col s2">
+                                                <button class="waves-effect waves-light btn" id="clickable-letter-G" onclick="HangMan.selectLetter('G');">G</button>
+                                            </div>
+                                            <div class="input-field col s2">
+                                                <button class="waves-effect waves-light btn" id="clickable-letter-H" onclick="HangMan.selectLetter('H');">H</button>
+                                            </div>
+                                            <div class="input-field col s2">
+                                                <button class="waves-effect waves-light btn" id="clickable-letter-I" onclick="HangMan.selectLetter('I');">I</button>
+                                            </div>
+                                            <div class="input-field col s2">
+                                                <button class="waves-effect waves-light btn" id="clickable-letter-J" onclick="HangMan.selectLetter('J');">J</button>
+                                            </div>
+                                            <div class="input-field col s2">
+                                                <button class="waves-effect waves-light btn" id="clickable-letter-K" onclick="HangMan.selectLetter('K');">K</button>
+                                            </div>
+                                            <div class="input-field col s2">
+                                                <button class="waves-effect waves-light btn" id="clickable-letter-L" onclick="HangMan.selectLetter('L');">L</button>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="input-field col s2">
+                                                <button class="waves-effect waves-light btn" id="clickable-letter-M" onclick="HangMan.selectLetter('M');">M</button>
+                                            </div>
+                                            <div class="input-field col s2">
+                                                <button class="waves-effect waves-light btn" id="clickable-letter-N" onclick="HangMan.selectLetter('N');">N</button>
+                                            </div>
+                                            <div class="input-field col s2">
+                                                <button class="waves-effect waves-light btn" id="clickable-letter-O" onclick="HangMan.selectLetter('O');">O</button>
+                                            </div>
+                                            <div class="input-field col s2">
+                                                <button class="waves-effect waves-light btn" id="clickable-letter-P" onclick="HangMan.selectLetter('P');">P</button>
+                                            </div>
+                                            <div class="input-field col s2">
+                                                <button class="waves-effect waves-light btn" id="clickable-letter-Q" onclick="HangMan.selectLetter('Q');">Q</button>
+                                            </div>
+                                            <div class="input-field col s2">
+                                                <button class="waves-effect waves-light btn" id="clickable-letter-R" onclick="HangMan.selectLetter('R');">R</button>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="input-field col s2">
+                                                <button class="waves-effect waves-light btn" id="clickable-letter-S" onclick="HangMan.selectLetter('S');">S</button>
+                                            </div>
+                                            <div class="input-field col s2">
+                                                <button class="waves-effect waves-light btn" id="clickable-letter-T" onclick="HangMan.selectLetter('T');">T</button>
+                                            </div>
+                                            <div class="input-field col s2">
+                                                <button class="waves-effect waves-light btn" id="clickable-letter-U" onclick="HangMan.selectLetter('U');">U</button>
+                                            </div>
+                                            <div class="input-field col s2">
+                                                <button class="waves-effect waves-light btn" id="clickable-letter-V" onclick="HangMan.selectLetter('V');">V</button>
+                                            </div>
+                                            <div class="input-field col s2">
+                                                <button class="waves-effect waves-light btn" id="clickable-letter-W" onclick="HangMan.selectLetter('W');">W</button>
+                                            </div>
+                                            <div class="input-field col s2">
+                                                <button class="waves-effect waves-light btn" id="clickable-letter-X" onclick="HangMan.selectLetter('X');">X</button>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="input-field col s2">
+                                                <button class="waves-effect waves-light btn" id="clickable-letter-Y" onclick="HangMan.selectLetter('Y');">Y</button>
+                                            </div>
+                                            <div class="input-field col s2">                                              
+                                                <button class="waves-effect waves-light btn" id="clickable-letter-Z" onclick="HangMan.selectLetter('Z');">Z</button>
+                                            </div>
+                                        </div>
+                                        <p>
+                                            <button disabled="true" id="selected-letter" class="waves-effect waves-light btn-large" onclick="HangMan.submitLetter();">Pick Letter</button>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="page-footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col l6 s12">
+                        <h5 class="white-text">Content</h5>
+                        <p class="grey-text text-lighten-4">Quick demonstration site developed by Ashley Scott during QA Consulting training.</p>
+                    </div>
+                    <div class="col l4 offset-l2 s12">
+                        <h5 class="white-text">Quick Navigation</h5>
+                        <ul>
+                            <li><a href="./index.html">Home</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-copyright">
+                <div class="container">Copyright &copy; Ashley Scott</div>
+            </div>
+        </footer>
+    </body>
+</html>
