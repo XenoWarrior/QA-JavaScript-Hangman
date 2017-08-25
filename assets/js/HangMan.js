@@ -7,6 +7,9 @@ var HangMan = {
     wrongLetters: [],
     globalUsed: [],
 
+    minLength: 0,
+    maxLength: 0,
+
     guessChances: Canvas.drawArray.length,
 
     selectedLetter: "",
@@ -24,6 +27,9 @@ var HangMan = {
         this.wrongLetters = [];
         this.globalUsed = [];
 
+        this.minLength = 0,
+        this.maxLength = 0,
+
         this.guessChances = Canvas.drawArray.length,
         this.selectedLetter = "";
 
@@ -35,16 +41,16 @@ var HangMan = {
     },
 
     async processWords(responseText) {
-        console.log(`Selected difficulty: ${$("#difficulty-selection").find(":selected").text()}: [Min: ${minLength}, Max: ${maxLength}]`);
+        console.log(`Selected difficulty: ${$("#difficulty-selection").find(":selected").text()}: [Min: ${this.minLength}, Max: ${this.maxLength}]`);
         
         let tmpWords = responseText.split("\n");
         for(let i = 0; i < tmpWords.length; i++) {
-            if(tmpWords[i].length >= minLength && tmpWords[i].length <= maxLength) {
-                console.log(`[Min: ${minLength}, Max: ${maxLength}], "${tmpWords[i]} matches length with ${tmpWords[i].length} letters. Adding word...`);
+            if(tmpWords[i].length >= this.minLength && tmpWords[i].length <= this.maxLength) {
+                //console.log(`[Min: ${this.minLength}, Max: ${this.maxLength}], "${tmpWords[i]} matches length with ${tmpWords[i].length} letters. Adding word...`);
                 HangMan.wordList.push(tmpWords[i]);
             }
             else {
-                console.log(`[Min: ${minLength}, Max: ${maxLength}], "${tmpWords[i]} does not match with ${tmpWords[i].length} letters. Ignoring word...`);
+                //console.log(`[Min: ${this.minLength}, Max: ${this.maxLength}], "${tmpWords[i]} does not match with ${tmpWords[i].length} letters. Ignoring word...`);
             }
         }
 
@@ -69,22 +75,22 @@ var HangMan = {
                 if (this.readyState == 4 && this.status == 200) {
                     switch($("#difficulty-selection").find(":selected").val()) {
                         case "1":
-                            minLength = 0;
-                            maxLength = 4;
+                            HangMan.minLength = 0;
+                            HangMan.maxLength = 4;
                         break;
 
                         case "2":
-                            minLength = 5;
-                            maxLength = 6;
+                            HangMan.minLength = 5;
+                            HangMan.maxLength = 6;
                         break;
 
                         case "3":
-                            minLength = 8;
-                            maxLength = 9999;
+                            HangMan.minLength = 8;
+                            HangMan.maxLength = 9999;
                         break;
                     }
 
-                    await processWords(this.responseText);
+                    HangMan.processWords(this.responseText);
                 }
             };
             xhr.open('GET', url, true);
