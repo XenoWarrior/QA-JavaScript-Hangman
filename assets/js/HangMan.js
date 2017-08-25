@@ -1,5 +1,7 @@
 var HangMan = {
     wordList: [],
+    allWords: [],
+
 
     selectedWord: [],
     maskedWord: [],
@@ -21,6 +23,7 @@ var HangMan = {
             $(`#clickable-letter-${buttons[i]}`).prop("disabled", false);
         }
 
+        this.wordList = [];
         this.selectedWord = [];
         this.maskedWord = [];
         this.discoveredLetters = [];
@@ -33,24 +36,39 @@ var HangMan = {
         this.guessChances = Canvas.drawArray.length,
         this.selectedLetter = "";
 
-        this.pickWord();
+        this.processWords();
 
         Canvas.reset();
 
+        $("#diff-selection-container").css("display", "none");
         $("#letter-container").css("display", "block");
     },
 
-    async processWords(responseText) {
+    async processWords() {
+        switch($("#difficulty-selection").find(":selected").val()) {
+            case "1":
+                HangMan.minLength = 0;
+                HangMan.maxLength = 4;
+            break;
+
+            case "2":
+                HangMan.minLength = 5;
+                HangMan.maxLength = 6;
+            break;
+
+            case "3":
+                HangMan.minLength = 9;
+                HangMan.maxLength = 9999;
+            break;
+
+        }
+
         console.log(`Selected difficulty: ${$("#difficulty-selection").find(":selected").text()}: [Min: ${this.minLength}, Max: ${this.maxLength}]`);
         
-        let tmpWords = responseText.split("\n");
-        for(let i = 0; i < tmpWords.length; i++) {
-            if(tmpWords[i].length >= this.minLength && tmpWords[i].length <= this.maxLength) {
-                //console.log(`[Min: ${this.minLength}, Max: ${this.maxLength}], "${tmpWords[i]} matches length with ${tmpWords[i].length} letters. Adding word...`);
-                HangMan.wordList.push(tmpWords[i]);
-            }
-            else {
-                //console.log(`[Min: ${this.minLength}, Max: ${this.maxLength}], "${tmpWords[i]} does not match with ${tmpWords[i].length} letters. Ignoring word...`);
+        for(let i = 0; i < this.allWords.length; i++) {
+            //+1 because the word list word always have the word followed by a hidden "\n" character
+            if(this.allWords[i].length >= this.minLength+1 && this.allWords[i].length <= this.maxLength+1) {
+                HangMan.wordList.push(this.allWords[i]);
             }
         }
 
@@ -73,24 +91,8 @@ var HangMan = {
             let xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
-                    switch($("#difficulty-selection").find(":selected").val()) {
-                        case "1":
-                            HangMan.minLength = 0;
-                            HangMan.maxLength = 4;
-                        break;
-
-                        case "2":
-                            HangMan.minLength = 5;
-                            HangMan.maxLength = 6;
-                        break;
-
-                        case "3":
-                            HangMan.minLength = 8;
-                            HangMan.maxLength = 9999;
-                        break;
-                    }
-
-                    HangMan.processWords(this.responseText);
+                    HangMan.allWords = this.responseText.split("\n");
+                    HangMan.processWords();
                 }
             };
             xhr.open('GET', url, true);
@@ -128,7 +130,7 @@ var HangMan = {
                 shownWord += `</strong>`;
                 shownWord += `<p><a style="width: 180px;" class="waves-effect waves-light btn-large" id="reset-state" onclick="HangMan.resetState();">New Game</a></p>`;
                 
-                $("#diff-selection-container").css("display", "none");
+                $("#diff-selection-container").css("display", "inline-block");
 
                 $("#chances-container").text("");
                 $("#letter-container").css("display", "none");
