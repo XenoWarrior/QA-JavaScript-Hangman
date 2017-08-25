@@ -34,36 +34,73 @@ var HangMan = {
         $("#letter-container").css("display", "block");
     },
 
-    getWords() {
-        this.currKing = 0;
-        let url = "https://raw.githubusercontent.com/dwyl/english-words/master/words_alpha.txt";
-
-        let xhr = new XMLHttpRequest();
-
-        xhr.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                HangMan.wordList = this.responseText.split("\n");
-
-                console.log(`Got ${HangMan.wordList.length} words.`);
-
-                $("#letter-container").css("display", "block");
-                $("#download-button").css("display", "none");
-                $("#download-button").prop("disabled", true);
-
-                HangMan.pickWord();
+    async processWords(responseText) {
+        console.log(`Selected difficulty: ${$("#difficulty-selection").find(":selected").text()}: [Min: ${minLength}, Max: ${maxLength}]`);
+        
+        let tmpWords = responseText.split("\n");
+        for(let i = 0; i < tmpWords.length; i++) {
+            if(tmpWords[i].length >= minLength && tmpWords[i].length <= maxLength) {
+                console.log(`[Min: ${minLength}, Max: ${maxLength}], "${tmpWords[i]} matches length with ${tmpWords[i].length} letters. Adding word...`);
+                HangMan.wordList.push(tmpWords[i]);
             }
-        };        
-        xhr.open('GET', url, true);
-        xhr.send();
+            else {
+                console.log(`[Min: ${minLength}, Max: ${maxLength}], "${tmpWords[i]} does not match with ${tmpWords[i].length} letters. Ignoring word...`);
+            }
+        }
+
+        console.log(`Got ${HangMan.wordList.length} words.`);
+
+        $("#letter-container").css("display", "block");
+        $("#download-button").css("display", "none");
+        $("#diff-selection-container").css("display", "none");
+        $("#download-button").prop("disabled", true);
+
+        HangMan.pickWord();
+    },
+
+    getWords() {
+        if($("#difficulty-selection").find(":selected").val() !== "0") {
+            $("#download-button").prop("disabled", true);
+
+            let url = "https://raw.githubusercontent.com/dwyl/english-words/master/words_alpha.txt";
+
+            let xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    switch($("#difficulty-selection").find(":selected").val()) {
+                        case "1":
+                            minLength = 0;
+                            maxLength = 4;
+                        break;
+
+                        case "2":
+                            minLength = 5;
+                            maxLength = 6;
+                        break;
+
+                        case "3":
+                            minLength = 8;
+                            maxLength = 9999;
+                        break;
+                    }
+
+                    await processWords(this.responseText);
+                }
+            };
+            xhr.open('GET', url, true);
+            xhr.send();
+        }
     },
 
     pickWord() {
         let selectIndex = (Math.floor((Math.random() * this.wordList.length))) - 1;
         this.selectedWord = this.wordList[selectIndex].toLowerCase().split("");
         this.selectedWord.splice(this.selectedWord.length-1, 1);
+
         console.log(this.selectedWord);
 
         Canvas.canvas();
+
         $("#stickman").css("display", "inline-block");
         $("#stickman").css("text-align", "center");
 
@@ -85,6 +122,8 @@ var HangMan = {
                 shownWord += `</strong>`;
                 shownWord += `<p><a style="width: 180px;" class="waves-effect waves-light btn-large" id="reset-state" onclick="HangMan.resetState();">New Game</a></p>`;
                 
+                $("#diff-selection-container").css("display", "none");
+
                 $("#chances-container").text("");
                 $("#letter-container").css("display", "none");
             }

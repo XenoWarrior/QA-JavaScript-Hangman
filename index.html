@@ -12,6 +12,12 @@
         <script src="./assets/js/Canvas.js"></script>
         <script src="./assets/js/HangMan.js"></script>
         <script src="./assets/js/KeyBinds.js"></script>
+
+        <script>
+            $(document).ready(function() {
+              $('select').material_select();
+            });
+        </script>
     </head>
     <body>
         <nav>
@@ -47,10 +53,23 @@
                                         <p>
                                             If you guess all the words before the hangman is hung, you win.
                                         </p>
-                                        <br/>
-                                        <p>
+                                        <div class="row">
+                                            <form id="diff-selection-container" class="col s12">
+                                                <div class="row">  
+                                                    <div class="input-field col s12">
+                                                        <select id="difficulty-selection">
+                                                            <option value="0" disabled selected>Select a difficulty</option>
+                                                            <option value="1">Easy (1 ~ 4 letters)</option>
+                                                            <option value="2">Medium (5 ~ 8 letters)</option>
+                                                            <option value="3">Hard (8+ letters)</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="row">
                                             <a id="download-button" class="waves-effect waves-light btn" onclick="HangMan.getWords();">Download Word List (4.5MB)</a>
-                                        </p>
+                                        </div>
                                     </div>
                                     <div clas="row">
                                         <p>
