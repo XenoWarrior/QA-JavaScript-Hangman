@@ -98,7 +98,7 @@ var HangMan = {
                     }
                 }
                 
-                $("#chances-container").text(`Life Remaining: ${this.guessChances}`);
+                $("#chances-container").text(`Life Remaining: ${this.guessChances == 1 ? "LAST LIFE" : this.guessChances}`);
             }
         }
         else {
