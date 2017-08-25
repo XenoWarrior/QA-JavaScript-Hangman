@@ -65,16 +65,30 @@ var HangMan = {
         let shownWord = "";
 
         if(this.guessChances > 0) {
-            for(let i = 0; i < this.selectedWord.length; i++) {
-                if(this.discoveredLetters.includes(this.selectedWord[i])) {
-                    shownWord += `${this.selectedWord[i]} `;
-                }
-                else {
-                    shownWord += "_ ";
-                }
-            }
             
-            $("#chances-container").text(`Life Remaining: ${this.guessChances}`);
+            if(this.discoveredLetters.length === this.selectedWord.length) {
+                shownWord = "Game over, you saved the hangman! The word is: <strong>";
+                for(let i = 0; i < this.selectedWord.length; i++) {
+                        shownWord += `${this.selectedWord[i]}`;
+                }
+                shownWord += `</strong>`;
+                shownWord += `<p><a style="width: 180px;" class="waves-effect waves-light btn-large" id="reset-state" onclick="HangMan.resetState();">New Game</a></p>`;
+                
+                $("#chances-container").text("");
+                $("#letter-container").css("display", "none");
+            }
+            else {
+                for(let i = 0; i < this.selectedWord.length; i++) {
+                    if(this.discoveredLetters.includes(this.selectedWord[i])) {
+                        shownWord += `${this.selectedWord[i]} `;
+                    }
+                    else {
+                        shownWord += "_ ";
+                    }
+                }
+                
+                $("#chances-container").text(`Life Remaining: ${this.guessChances}`);
+            }
         }
         else {
             shownWord = "Game over, your hangman was hung! The word was: <strong>";
