@@ -9,7 +9,15 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="./assets/materialize/js/materialize.min.js"></script>
 
+        <script src="./assets/js/Canvas.js"></script>
         <script src="./assets/js/HangMan.js"></script>
+        <script src="./assets/js/KeyBinds.js"></script>
+
+        <script>
+            $(document).ready(function() {
+              $('select').material_select();
+            });
+        </script>
     </head>
     <body>
         <nav>
@@ -35,110 +43,133 @@
                             <div id="test-swipe-1">
                                 <h3 class="center-align">Game</h3>
                                 <div class="row center-align">
-                                    <p>
-                                        The computer has decided on a random word. Click the letters below to take a guess at what the word is.
-                                        <br/>
-                                        Each wrong word will add another piece of the hangman. Once the hangman is fully shown, the game is over.
-                                        <br/>
-                                        If you guess all the words before the hangman is hung, you win.
-                                        <br/>
-                                        <br/>
-                                        <a id="download-button" class="waves-effect waves-light btn" onclick="HangMan.getWords();">Download Word List (4.5MB)</a>
-                                    </p>
-                                    <p>
-                                        <div id="chances-container"></div>
-                                    </p>
-                                    <br/>
-                                    <p>
-                                        <div id="hangman-word-container"></div>
-                                    </p>
+                                    <div clas="row">
+                                        <p>
+                                            The computer has decided on a random word. Click the letters below to take a guess at what the word is.
+                                        </p>
+                                        <p>
+                                            Each wrong word will add another piece of the hangman. Once the hangman is fully shown, the game is over.
+                                        </p>
+                                        <p>
+                                            If you guess all the words before the hangman is hung, you win.
+                                        </p>
+                                        <div class="row">
+                                            <form id="diff-selection-container" class="col s12">
+                                                <div class="row">  
+                                                    <div class="input-field col s12">
+                                                        <select id="difficulty-selection">
+                                                            <option value="0" disabled selected>Select a difficulty</option>
+                                                            <option value="1">Easy (1 ~ 4 letters)</option>
+                                                            <option value="2">Medium (5 ~ 8 letters)</option>
+                                                            <option value="3">Hard (8+ letters)</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="row">
+                                            <a id="download-button" class="waves-effect waves-light btn" onclick="HangMan.getWords();">Download Word List (4.5MB)</a>
+                                        </div>
+                                    </div>
+                                    <div clas="row">
+                                        <p>
+                                            <div id="chances-container"></div>
+                                            <canvas id="stickman">Browser does not support HTML5 Canvas</canvas>
+                                        </p>
+                                        <p>
+                                            <div id="hangman-word-container"></div>
+                                        </p>
+                                    </div>
                                     <div id="letter-container">
                                         <div class="row">
+                                            You can also press the letter you want on your keyboard and submit it by pressing <q>Enter</q>
+                                        </div>
+                                        <div class="row">
                                             <div class="input-field col s2">
-                                                <button class="waves-effect waves-light btn-large" style="width: 128px;" id="clickable-letter-A" onclick="HangMan.selectLetter('A');">A</button>
+                                                <button class="waves-effect waves-light btn-large" style="width: 128px;" id="clickable-letter-A" accesskey="A" onclick="HangMan.selectLetter('A');">A</button>
                                             </div>
                                             <div class="input-field col s2">
-                                                <button class="waves-effect waves-light btn-large" style="width: 128px;" id="clickable-letter-B" onclick="HangMan.selectLetter('B');">B</button>
+                                                <button class="waves-effect waves-light btn-large" style="width: 128px;" id="clickable-letter-B" accesskey="B" onclick="HangMan.selectLetter('B');">B</button>
                                             </div>
                                             <div class="input-field col s2">
-                                                <button class="waves-effect waves-light btn-large" style="width: 128px;" id="clickable-letter-C" onclick="HangMan.selectLetter('C');">C</button>
+                                                <button class="waves-effect waves-light btn-large" style="width: 128px;" id="clickable-letter-C" accesskey="C" onclick="HangMan.selectLetter('C');">C</button>
                                             </div>
                                             <div class="input-field col s2">
-                                                <button class="waves-effect waves-light btn-large" style="width: 128px;" id="clickable-letter-D" onclick="HangMan.selectLetter('D');">D</button>
+                                                <button class="waves-effect waves-light btn-large" style="width: 128px;" id="clickable-letter-D" accesskey="D" onclick="HangMan.selectLetter('D');">D</button>
                                             </div>
                                             <div class="input-field col s2">
-                                                <button class="waves-effect waves-light btn-large" style="width: 128px;" id="clickable-letter-E" onclick="HangMan.selectLetter('E');">E</button>
+                                                <button class="waves-effect waves-light btn-large" style="width: 128px;" id="clickable-letter-E" accesskey="E" onclick="HangMan.selectLetter('E');">E</button>
                                             </div>
                                             <div class="input-field col s2">
-                                                <button class="waves-effect waves-light btn-large" style="width: 128px;" id="clickable-letter-F" onclick="HangMan.selectLetter('F');">F</button>
+                                                <button class="waves-effect waves-light btn-large" style="width: 128px;" id="clickable-letter-F" accesskey="F" onclick="HangMan.selectLetter('F');">F</button>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="input-field col s2">
-                                                <button class="waves-effect waves-light btn-large" style="width: 128px;" id="clickable-letter-G" onclick="HangMan.selectLetter('G');">G</button>
+                                                <button class="waves-effect waves-light btn-large" style="width: 128px;" id="clickable-letter-G" accesskey="G" onclick="HangMan.selectLetter('G');">G</button>
                                             </div>
                                             <div class="input-field col s2">
-                                                <button class="waves-effect waves-light btn-large" style="width: 128px;" id="clickable-letter-H" onclick="HangMan.selectLetter('H');">H</button>
+                                                <button class="waves-effect waves-light btn-large" style="width: 128px;" id="clickable-letter-H" accesskey="H" onclick="HangMan.selectLetter('H');">H</button>
                                             </div>
                                             <div class="input-field col s2">
-                                                <button class="waves-effect waves-light btn-large" style="width: 128px;" id="clickable-letter-I" onclick="HangMan.selectLetter('I');">I</button>
+                                                <button class="waves-effect waves-light btn-large" style="width: 128px;" id="clickable-letter-I" accesskey="I" onclick="HangMan.selectLetter('I');">I</button>
                                             </div>
                                             <div class="input-field col s2">
-                                                <button class="waves-effect waves-light btn-large" style="width: 128px;" id="clickable-letter-J" onclick="HangMan.selectLetter('J');">J</button>
+                                                <button class="waves-effect waves-light btn-large" style="width: 128px;" id="clickable-letter-J" accesskey="J" onclick="HangMan.selectLetter('J');">J</button>
                                             </div>
                                             <div class="input-field col s2">
-                                                <button class="waves-effect waves-light btn-large" style="width: 128px;" id="clickable-letter-K" onclick="HangMan.selectLetter('K');">K</button>
+                                                <button class="waves-effect waves-light btn-large" style="width: 128px;" id="clickable-letter-K" accesskey="K" onclick="HangMan.selectLetter('K');">K</button>
                                             </div>
                                             <div class="input-field col s2">
-                                                <button class="waves-effect waves-light btn-large" style="width: 128px;" id="clickable-letter-L" onclick="HangMan.selectLetter('L');">L</button>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="input-field col s2">
-                                                <button class="waves-effect waves-light btn-large" style="width: 128px;" id="clickable-letter-M" onclick="HangMan.selectLetter('M');">M</button>
-                                            </div>
-                                            <div class="input-field col s2">
-                                                <button class="waves-effect waves-light btn-large" style="width: 128px;" id="clickable-letter-N" onclick="HangMan.selectLetter('N');">N</button>
-                                            </div>
-                                            <div class="input-field col s2">
-                                                <button class="waves-effect waves-light btn-large" style="width: 128px;" id="clickable-letter-O" onclick="HangMan.selectLetter('O');">O</button>
-                                            </div>
-                                            <div class="input-field col s2">
-                                                <button class="waves-effect waves-light btn-large" style="width: 128px;" id="clickable-letter-P" onclick="HangMan.selectLetter('P');">P</button>
-                                            </div>
-                                            <div class="input-field col s2">
-                                                <button class="waves-effect waves-light btn-large" style="width: 128px;" id="clickable-letter-Q" onclick="HangMan.selectLetter('Q');">Q</button>
-                                            </div>
-                                            <div class="input-field col s2">
-                                                <button class="waves-effect waves-light btn-large" style="width: 128px;" id="clickable-letter-R" onclick="HangMan.selectLetter('R');">R</button>
+                                                <button class="waves-effect waves-light btn-large" style="width: 128px;" id="clickable-letter-L" accesskey="L" onclick="HangMan.selectLetter('L');">L</button>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="input-field col s2">
-                                                <button class="waves-effect waves-light btn-large" style="width: 128px;" id="clickable-letter-S" onclick="HangMan.selectLetter('S');">S</button>
+                                                <button class="waves-effect waves-light btn-large" style="width: 128px;" id="clickable-letter-M" accesskey="M" onclick="HangMan.selectLetter('M');">M</button>
                                             </div>
                                             <div class="input-field col s2">
-                                                <button class="waves-effect waves-light btn-large" style="width: 128px;" id="clickable-letter-T" onclick="HangMan.selectLetter('T');">T</button>
+                                                <button class="waves-effect waves-light btn-large" style="width: 128px;" id="clickable-letter-N" accesskey="N" onclick="HangMan.selectLetter('N');">N</button>
                                             </div>
                                             <div class="input-field col s2">
-                                                <button class="waves-effect waves-light btn-large" style="width: 128px;" id="clickable-letter-U" onclick="HangMan.selectLetter('U');">U</button>
+                                                <button class="waves-effect waves-light btn-large" style="width: 128px;" id="clickable-letter-O" accesskey="O" onclick="HangMan.selectLetter('O');">O</button>
                                             </div>
                                             <div class="input-field col s2">
-                                                <button class="waves-effect waves-light btn-large" style="width: 128px;" id="clickable-letter-V" onclick="HangMan.selectLetter('V');">V</button>
+                                                <button class="waves-effect waves-light btn-large" style="width: 128px;" id="clickable-letter-P" accesskey="P" onclick="HangMan.selectLetter('P');">P</button>
                                             </div>
                                             <div class="input-field col s2">
-                                                <button class="waves-effect waves-light btn-large" style="width: 128px;" id="clickable-letter-W" onclick="HangMan.selectLetter('W');">W</button>
+                                                <button class="waves-effect waves-light btn-large" style="width: 128px;" id="clickable-letter-Q" accesskey="Q" onclick="HangMan.selectLetter('Q');">Q</button>
                                             </div>
                                             <div class="input-field col s2">
-                                                <button class="waves-effect waves-light btn-large" style="width: 128px;" id="clickable-letter-X" onclick="HangMan.selectLetter('X');">X</button>
+                                                <button class="waves-effect waves-light btn-large" style="width: 128px;" id="clickable-letter-R" accesskey="R" onclick="HangMan.selectLetter('R');">R</button>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="input-field col s2">
-                                                <button class="waves-effect waves-light btn-large" style="width: 128px;" id="clickable-letter-Y" onclick="HangMan.selectLetter('Y');">Y</button>
+                                                <button class="waves-effect waves-light btn-large" style="width: 128px;" id="clickable-letter-S" accesskey="S" onclick="HangMan.selectLetter('S');">S</button>
+                                            </div>
+                                            <div class="input-field col s2">
+                                                <button class="waves-effect waves-light btn-large" style="width: 128px;" id="clickable-letter-T" accesskey="T" onclick="HangMan.selectLetter('T');">T</button>
+                                            </div>
+                                            <div class="input-field col s2">
+                                                <button class="waves-effect waves-light btn-large" style="width: 128px;" id="clickable-letter-U" accesskey="U" onclick="HangMan.selectLetter('U');">U</button>
+                                            </div>
+                                            <div class="input-field col s2">
+                                                <button class="waves-effect waves-light btn-large" style="width: 128px;" id="clickable-letter-V" accesskey="V" onclick="HangMan.selectLetter('V');">V</button>
+                                            </div>
+                                            <div class="input-field col s2">
+                                                <button class="waves-effect waves-light btn-large" style="width: 128px;" id="clickable-letter-W" accesskey="W" onclick="HangMan.selectLetter('W');">W</button>
+                                            </div>
+                                            <div class="input-field col s2">
+                                                <button class="waves-effect waves-light btn-large" style="width: 128px;" id="clickable-letter-X" accesskey="X" onclick="HangMan.selectLetter('X');">X</button>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="input-field col s2">
+                                                <button class="waves-effect waves-light btn-large" style="width: 128px;" id="clickable-letter-Y" accesskey="Y" onclick="HangMan.selectLetter('Y');">Y</button>
                                             </div>
                                             <div class="input-field col s2">                                              
-                                                <button class="waves-effect waves-light btn-large" style="width: 128px;" id="clickable-letter-Z" onclick="HangMan.selectLetter('Z');">Z</button>
+                                                <button class="waves-effect waves-light btn-large" style="width: 128px;" id="clickable-letter-Z" accesskey="Z" onclick="HangMan.selectLetter('Z');">Z</button>
                                             </div>
                                         </div>
                                         <p>
